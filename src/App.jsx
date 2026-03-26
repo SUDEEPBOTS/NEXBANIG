@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  BotMessageSquare, Music, Server, Terminal, Heart, 
-  ShieldCheck, Zap, Headset, Globe, Code, ShieldAlert, Rocket, 
-  ChevronDown, Menu, X, Bell, Gamepad2, Swords, Lock
+  ShieldAlert, Ban, AlertTriangle, BookOpen, Crosshair, 
+  Flame, Gavel, Lock, Database, Bot, FileTerminal, ExternalLink 
 } from 'lucide-react';
-import { FaGithub, FaInstagram, FaTelegramPlane } from 'react-icons/fa';
-import Background from './components/Background';
+import { FaTelegramPlane } from 'react-icons/fa';
+import Background from './components/Background'; 
 
 // --- ANIMATIONS ---
 const staggerContainer = {
@@ -14,292 +13,219 @@ const staggerContainer = {
   visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
-const fadeInUp = {
-  hidden: { y: 50, opacity: 0, scale: 0.95 },
-  visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.5, type: "spring", bounce: 0.4 } },
+const fadeUp = {
+  hidden: { y: 40, opacity: 0, scale: 0.95 },
+  visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.5, type: "spring", bounce: 0.5 } },
 };
+
+// --- DATA ---
+const bannersList = [
+  { name: "‌𝐒 𝛂 𝛈 ᴊ 𝛊 𝛕.", link: "http://t.me/wafbo" },
+  { name: "Ꮪ 𝛂 𝛕 𝛐 ɾ 𝛖", link: "http://T.me/ll_SATORU_ll" },
+  { name: "𓆰𝅃꯭᳚𝆺𝅥⃝ ᷟ𓆩 𝐒 ᴀ ғ ғ ɪ 𝁘ໍ𝀛𓂃", link: "http://T.me/ll_AYMAN_SAFFI_ll" },
+  { name: "SHIVANSH", link: "http://T.me/BeDestroyer" },
+  { name: "𝜹 𝝉 ֟፝𝛜 𝝂 𝝐 ─𑰮", link: "https://t.me/Zcziiy" },
+  { name: "BOSS JI", link: "http://T.me/THE_BOSS_JI" },
+  { name: "𝐒 ᴀ ʀ፝֟ ҡ ᴀ ʀ ‹𐩃𓂃ֶꪳ", link: "https://t.me/ll_SARKAR_ERA_ll" },
+];
+
+const proofChannels = [
+  { name: "NEX Banning HQ", desc: "Main Terminal & Operations", link: "http://T.me/NEX_FUCKER" },
+  { name: "Global Ban List I", desc: "Termination Evidence Logs", link: "https://t.me/+fwvdW3Bce-w0MzM8" },
+  { name: "Global Ban List II", desc: "Secondary Execution Logs", link: "https://t.me/+wGWamRCfVGU2MGRk" },
+];
 
 // --- COMPONENTS ---
 
-// 1. Floating Glass Navbar
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <motion.nav 
-      initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8, type: "spring" }}
-      className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full px-6 py-3 z-50 flex justify-between items-center shadow-[0_0_30px_rgba(168,85,247,0.1)]"
-    >
-      <div className="text-white font-extrabold text-xl tracking-widest flex items-center gap-2">
-        <Zap className="text-purple-500 w-5 h-5" /> NEX.
-      </div>
-      
-      {/* Desktop Links */}
-      <div className="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-        <a href="#hero" className="hover:text-white transition-colors">Home</a>
-        <a href="#bots" className="hover:text-purple-400 transition-colors">Arsenal</a>
-        <a href="#intel" className="hover:text-blue-400 transition-colors">Intel Hub</a>
-        <a href="#team" className="hover:text-pink-400 transition-colors">Team</a>
-      </div>
-
-      <a href="https://t.me/NEX_FUCKR" target="_blank" rel="noreferrer" className="hidden md:flex bg-white/10 hover:bg-purple-600 border border-white/10 hover:border-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold transition-all items-center gap-2">
-        <FaTelegramPlane /> Join NEX
-      </a>
-
-      {/* Mobile Menu Toggle */}
-      <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <X /> : <Menu />}
-      </button>
-    </motion.nav>
-  );
-};
-
-// 2. Premium Bot Card
-const BotCard = ({ name, description, icon: Icon, tag, link, comingSoon }) => (
-  <motion.div variants={fadeInUp} whileHover="hover" whileTap={{ scale: 0.95 }} className="relative group cursor-pointer h-full">
-    <div className={`absolute inset-0 bg-gradient-to-r ${comingSoon ? 'from-gray-600 to-gray-800' : 'from-purple-600 to-pink-600'} rounded-3xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500`}></div>
+// 1. Enforcer/Banner Card
+const BannerCard = ({ name, link }) => (
+  <motion.a 
+    href={link} target="_blank" rel="noopener noreferrer"
+    variants={fadeUp} whileHover={{ scale: 1.03, y: -5 }} whileTap={{ scale: 0.95 }}
+    className="relative overflow-hidden bg-gradient-to-br from-[#0a0000] to-[#1a0000] border border-red-900/50 hover:border-red-500 p-6 rounded-2xl flex items-center justify-between group transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+  >
+    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+    <div className="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     
-    <div className={`relative h-full bg-[#050505]/80 p-8 rounded-3xl border border-white/5 ${comingSoon ? 'group-hover:border-gray-500/50' : 'group-hover:border-purple-500/50'} backdrop-blur-xl flex flex-col transition-all duration-300`}>
-      {tag && (
-          <span className={`absolute top-4 right-4 bg-white/10 border border-white/10 ${comingSoon ? 'text-gray-400' : 'text-white'} text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full backdrop-blur-md`}>
-            {tag}
-          </span>
-      )}
-      <div className="flex items-center gap-4 mb-5">
-        <div className={`bg-gradient-to-br ${comingSoon ? 'from-gray-500/20' : 'from-purple-500/20'} to-transparent p-4 rounded-2xl border ${comingSoon ? 'border-gray-500/20' : 'border-purple-500/20'} group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-          <Icon className={`w-8 h-8 ${comingSoon ? 'text-gray-500' : 'text-purple-400'} group-hover:text-white transition-colors`} />
-        </div>
-        <h3 className={`text-2xl font-bold ${comingSoon ? 'text-gray-400' : 'text-white'} tracking-tight`}>{name}</h3>
+    <div className="flex items-center gap-5 z-10">
+      <div className="bg-red-950/80 p-4 rounded-xl border border-red-900/50 group-hover:bg-red-600 transition-all text-red-500 group-hover:text-black shadow-inner">
+        <Gavel className="w-6 h-6" />
       </div>
-      <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">{description}</p>
-      
-      {comingSoon ? (
-        <button disabled className="w-full text-center bg-white/5 text-gray-500 border border-white/5 font-bold px-6 py-3 rounded-xl cursor-not-allowed flex items-center justify-center gap-2">
-          <Lock size={18} /> Compiling...
-        </button>
-      ) : (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="w-full text-center bg-white/5 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 text-gray-300 hover:text-white border border-white/10 hover:border-transparent font-bold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
-          <FaTelegramPlane size={18} /> Launch System
-        </a>
-      )}
+      <div>
+        <h4 className="text-gray-100 font-black tracking-widest text-sm md:text-base group-hover:text-white transition-colors drop-shadow-md">{name}</h4>
+        <span className="text-red-700 font-bold text-[10px] uppercase tracking-[0.3em] flex items-center gap-1 mt-1 group-hover:text-red-400">
+          <Crosshair size={10} /> Verified Enforcer
+        </span>
+      </div>
     </div>
+
+    <div className="z-10 bg-black/60 p-3 rounded-xl border border-red-900/30 group-hover:border-red-500 transition-all">
+      <FaTelegramPlane className="text-red-600 group-hover:text-red-500 text-xl" />
+    </div>
+  </motion.a>
+);
+
+// 2. Proof Channel Card
+const ProofCard = ({ name, desc, link }) => (
+  <motion.a 
+    href={link} target="_blank" rel="noopener noreferrer"
+    variants={fadeUp} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+    className="bg-red-950/20 border-l-4 border-red-600 hover:border-red-400 p-6 rounded-r-2xl flex items-center justify-between group transition-all"
+  >
+    <div className="flex items-center gap-4">
+      <div className="bg-red-900/40 p-3 rounded-full text-red-500 group-hover:bg-red-500 group-hover:text-black transition-all">
+        <Database size={24} />
+      </div>
+      <div>
+        <h3 className="text-xl font-bold text-white uppercase tracking-widest">{name}</h3>
+        <p className="text-red-500/70 text-xs font-bold uppercase tracking-widest mt-1">{desc}</p>
+      </div>
+    </div>
+    <ExternalLink className="text-red-900 group-hover:text-red-500 transition-colors" />
+  </motion.a>
+);
+
+// 3. Upcoming Feature Card
+const UpcomingCard = ({ name, icon: Icon }) => (
+  <motion.div 
+    variants={fadeUp}
+    className="bg-[#050000]/80 border border-red-900/30 p-8 rounded-3xl relative overflow-hidden flex flex-col items-center text-center opacity-80"
+  >
+    <div className="absolute top-0 right-0 p-6 opacity-5"><Icon size={100} /></div>
+    <div className="bg-red-950/50 p-4 rounded-full text-red-600 mb-4 border border-red-900/50">
+      <Icon size={32} />
+    </div>
+    <h3 className="text-2xl font-black text-white uppercase tracking-widest mb-2">{name}</h3>
+    <span className="bg-red-900/30 text-red-500 font-bold text-[10px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border border-red-900/50 flex items-center gap-2">
+      <Lock size={10} /> Compiling...
+    </span>
   </motion.div>
 );
 
-// 3. Network Intel Card (Safety, Updates, Server)
-const IntelCard = ({ name, description, icon: Icon, link, btnText, color }) => (
-  <motion.a 
-    href={link} target="_blank" rel="noopener noreferrer"
-    variants={fadeInUp}
-    whileHover={{ y: -5, scale: 1.02 }}
-    whileTap={{ scale: 0.95 }}
-    className={`relative overflow-hidden flex flex-col p-8 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 hover:border-${color}-500/50 group transition-all h-full`}
-  >
-    <div className={`absolute right-[-10%] top-[-20%] w-32 h-32 bg-${color}-500/10 blur-3xl rounded-full group-hover:bg-${color}-500/30 transition-all`}></div>
-    <div className={`bg-${color}-500/10 p-4 rounded-2xl border border-${color}-500/20 text-${color}-400 w-fit mb-6 group-hover:scale-110 transition-transform`}><Icon size={28} /></div>
-    <h4 className="text-white font-extrabold text-2xl mb-3">{name}</h4>
-    <p className="text-gray-400 text-sm flex-grow mb-6 leading-relaxed">{description}</p>
-    <div className={`text-${color}-400 font-bold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:text-white transition-colors`}>
-      {btnText} <ChevronDown className="-rotate-90 w-4 h-4" />
-    </div>
-  </motion.a>
-);
-
-// 4. Team Profile
-const TeamMember = ({ name, role, link, letter, isMod }) => (
-  <motion.a 
-    href={link} target="_blank" rel="noopener noreferrer"
-    variants={fadeInUp} 
-    whileHover={{ scale: 1.03 }}
-    whileTap={{ scale: 0.95 }}
-    className="bg-white/[0.02] p-5 rounded-3xl border border-white/5 flex items-center gap-5 shadow-xl backdrop-blur-md hover:border-pink-500/50 hover:bg-white/[0.05] transition-all cursor-pointer group"
-  >
-      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${isMod ? 'from-gray-800 to-red-900/50' : 'from-gray-800 to-black'} border border-white/10 flex items-center justify-center text-xl font-black text-white ${!isMod && 'group-hover:from-purple-600 group-hover:to-pink-600'} transition-all duration-500 shadow-lg group-hover:rotate-6`}>
-        {letter}
-      </div>
-      <div>
-          <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 transition-all">{name}</h3>
-          <span className={`${isMod ? 'text-red-500' : 'text-gray-500'} font-bold text-[10px] uppercase tracking-widest`}>{role}</span>
-      </div>
-  </motion.a>
-);
 
 // --- MAIN APP ---
 export default function App() {
   return (
-    <div className="text-gray-200 min-h-screen font-sans relative selection:bg-purple-500/30 scroll-smooth">
+    <div className="text-gray-200 min-h-screen font-sans relative selection:bg-red-500/30 bg-[#020000]">
+      {/* Dark Red Ambient Overlay */}
+      <div className="fixed inset-0 z-0 pointer-events-none mix-blend-multiply bg-red-950/30"></div>
       <Background />
-      <Navbar />
+      
+      {/* Massive Red Glow in Center */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] max-w-[900px] max-h-[900px] bg-red-700/10 rounded-full blur-[180px] pointer-events-none z-0"></div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-20">
         
-        {/* 🚀 HERO SECTION */}
-        <section id="hero" className="min-h-screen flex flex-col justify-center items-center text-center p-6 pt-32 relative">
+        {/* 🔥 HEADER SECTION */}
+        <section className="flex flex-col justify-center items-center text-center pt-10 mb-16 relative">
           <motion.div
-            className="mb-8 flex items-center gap-3 bg-black/40 border border-purple-500/30 text-purple-300 px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold backdrop-blur-md cursor-pointer hover:border-purple-400 transition-colors"
-            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", bounce: 0.5 }}
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+            className="mb-8 flex items-center gap-2 bg-red-950/40 border border-red-600/50 text-red-400 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] backdrop-blur-md shadow-[0_0_20px_rgba(220,38,38,0.2)]"
+            initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           >
-             <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-             </span>
-             Systems Online • Layer 223+
+             <Ban className="w-4 h-4 text-red-500" /> Enforcement Division
           </motion.div>
           
           <motion.h1 
-            className="text-7xl md:text-[10rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600 mb-6 tracking-tighter leading-none"
-            initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, type: "spring" }}
+            className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-red-100 to-red-900 mb-6 tracking-tighter"
+            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, type: "spring" }}
           >
-            NEX<span className="text-purple-600">.</span>
+            NEX BANNING
           </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-2xl text-gray-400 max-w-2xl mb-12 font-medium"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 1 }}
+          <motion.p
+             className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-medium"
+             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           >
-            Not just another network. We build <span className="text-white">enterprise-grade</span> Telegram bots and high-performance ecosystems.
+            Hunting down and terminating illegal channels that violate Telegram's Terms of Service. We cleanse the network.
           </motion.p>
-          
-          <motion.div className="flex flex-wrap justify-center gap-5" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-            <motion.a href="#bots" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-white text-black hover:bg-gray-200 font-bold px-8 py-4 rounded-2xl flex items-center gap-2 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-              <Zap size={20}/> Initialize System
-            </motion.a>
-            <motion.a href="#intel" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-black/50 backdrop-blur-md border border-white/10 hover:border-white/30 text-white font-bold px-8 py-4 rounded-2xl flex items-center gap-2 transition-all">
-               View Intel
-            </motion.a>
-          </motion.div>
-
-          <motion.div 
-            className="absolute bottom-10 text-gray-500 animate-bounce"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-          >
-            <ChevronDown size={32} />
-          </motion.div>
         </section>
 
-        {/* 🤖 BOTS ECOSYSTEM */}
-        <motion.section id="bots" className="py-24 p-6 md:p-12 lg:p-24 max-w-7xl mx-auto" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-          <motion.div variants={fadeInUp} className="mb-16 md:text-center flex flex-col md:items-center">
-              <span className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-[0.2em] flex items-center gap-2 w-fit mb-6"><Terminal size={14}/> Arsenal</span>
-              <h2 className="text-5xl md:text-7xl font-black text-white">Dominate with <br className="md:hidden" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Our Bots</span></h2>
-          </motion.div>
+        {/* 🚨 EXAMS/STUDY LOCKDOWN BANNER */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4, type: "spring" }}
+          className="mb-24 relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(220,38,38,0.1)_10px,rgba(220,38,38,0.1)_20px)] z-0 rounded-3xl"></div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <BotCard name="HOIiSTING" description="Deploy your repositories 100% free. The ultimate deployment engine for developers." icon={Server} tag="Free Host" link="http://t.me/HOIiSTING_BOT" />
-            <BotCard name="Yuki Music" description="Studio-quality, lag-free music streaming built for massive supergroups." icon={Music} tag="Premium" link="http://t.me/YUKIMUSiICBOT" />
-            <BotCard name="Aniya Music" description="Immersive audio vibes and advanced VC controls for active communities." icon={Heart} tag="Music" link="http://t.me/ANIYA_MUSIC_BOT" />
-            <BotCard name="Session Genii" description="Securely generate Pyrogram and Telethon sessions in milliseconds." icon={Code} tag="Dev Tool" link="http://t.me/SESSIONGENIIBOT" />
-            <BotCard name="Wafuuu" description="Your ultimate Waifu, gacha, and entertainment companion for Telegram." icon={BotMessageSquare} tag="Anime" link="http://t.me/Wafuuuubot" />
-            <BotCard name="NEX Core" description="Military-grade group automation, antiflood, and raid protection." icon={ShieldAlert} tag="Security" link="https://t.me/NEX_FUCKR" />
-            {/* New Copyright Bot */}
-            <BotCard name="Copyright Shield" description="Automated DMCA handling and strict copyright protection for your supergroups." icon={ShieldCheck} tag="Soon" comingSoon={true} />
+          <div className="bg-red-950/80 border-2 border-red-600 p-8 md:p-12 rounded-3xl text-center relative z-10 shadow-[0_0_50px_rgba(220,38,38,0.3)] backdrop-blur-lg flex flex-col items-center">
+            <div className="bg-red-600 text-white p-4 rounded-full mb-6 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.8)]">
+              <Lock size={40} />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-widest mb-4 flex items-center gap-3">
+              <AlertTriangle className="text-red-500 hidden md:block" size={40}/>
+              Operations Suspended
+              <AlertTriangle className="text-red-500 hidden md:block" size={40}/>
+            </h2>
+            <div className="w-24 h-1 bg-red-500 mx-auto mb-6 rounded-full"></div>
+            <p className="text-red-200 text-lg md:text-xl font-bold uppercase tracking-widest flex items-center justify-center gap-3">
+              <BookOpen size={24} className="text-red-400" />
+              Currently offline due to academic exams & studies.
+              <BookOpen size={24} className="text-red-400" />
+            </p>
+            <p className="text-red-400/80 text-sm mt-6 font-medium max-w-lg mx-auto uppercase tracking-widest">
+              The squad will resume enforcement protocols once examinations are cleared. Until then, the system remains in lockdown.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* ⚔️ THE ENFORCERS (Our Banners) */}
+        <motion.section className="mb-24" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <div className="text-center mb-12 flex flex-col items-center">
+            <div className="bg-red-900/30 p-3 rounded-full mb-4 border border-red-900/50">
+              <ShieldAlert className="text-red-500 w-8 h-8" />
+            </div>
+            <h2 className="text-4xl font-black text-white uppercase tracking-widest">The Enforcers</h2>
+            <p className="text-red-600 font-bold tracking-[0.4em] uppercase mt-2 text-sm">Our Official Banners</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {bannersList.map((banner, index) => (
+              <BannerCard key={index} name={banner.name} link={banner.link} />
+            ))}
           </div>
         </motion.section>
 
-        {/* 🧠 NETWORK INTEL (Safety, Updates, Minecraft) */}
-        <motion.section id="intel" className="py-24 p-6 md:p-12 lg:p-24 max-w-7xl mx-auto relative" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl bg-blue-900/10 blur-[150px] rounded-full -z-10"></div>
+        {/* 📜 BANNING PROOFS (Execution Logs) */}
+        <motion.section className="mb-24" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <div className="mb-10 border-l-4 border-red-600 pl-6">
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-widest">Execution Logs</h2>
+            <p className="text-gray-500 font-bold mt-2 tracking-widest uppercase text-sm">Verify Our Terminations</p>
+          </div>
           
-          <motion.div variants={fadeInUp} className="mb-16">
-              <span className="bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-[0.2em] flex items-center gap-2 w-fit mb-6"><Globe size={14}/> Network Intel</span>
-              <h2 className="text-4xl md:text-6xl font-black text-white">Intelligence & <span className="text-blue-500">Infrastructure</span></h2>
-              <p className="text-gray-400 mt-4 text-lg max-w-2xl">Keep your communities safe, stay updated with the latest patches, and connect to our exclusive servers.</p>
-          </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <IntelCard 
-              name="Safety HQ" 
-              description="Learn exactly how to protect your Group Chats from raids, spam, and malicious attacks." 
-              icon={ShieldCheck} link="https://safety.yukiapi.site" btnText="Read Guide" color="green" 
-            />
-            <IntelCard 
-              name="NEX Updates" 
-              description="Central log for all bot patches, new features, API endpoints, and system maintenance." 
-              icon={Bell} link="https://update.yukiapi.site" btnText="View Logs" color="purple" 
-            />
-            <IntelCard 
-              name="Minecraft SMP" 
-              description="Join our official Minecraft Server. Survival, economy, and wars. Address: Yukiapi.site | Port: 25565" 
-              icon={Gamepad2} link="minecraft://Yukiapi.site:25565" btnText="Copy IP" color="pink" 
-            />
+            {proofChannels.map((channel, index) => (
+              <ProofCard key={index} name={channel.name} desc={channel.desc} link={channel.link} />
+            ))}
           </div>
         </motion.section>
 
-        {/* 💻 TEAM & UPCOMING */}
-        <motion.section id="team" className="py-24 p-6 md:p-12 lg:p-24 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-          {/* Team & Mods */}
-          <div>
-            <motion.div variants={fadeInUp} className="mb-10">
-                  <span className="text-pink-500 font-bold text-xs uppercase tracking-[0.2em]">The Brains</span>
-                  <h2 className="text-5xl font-black text-white mt-4">Hellfire<span className="text-gray-500">Devs</span></h2>
-            </motion.div>
-            
-            <h4 className="text-gray-400 uppercase tracking-widest text-xs font-bold mb-4">Core Developers</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <TeamMember name="BeDestroyer" role="System Architect" letter="B" link="http://t.me/BeDestroyer" />
-              <TeamMember name="Zcziiy" role="Backend Developer" letter="Z" link="http://t.me/Zcziiy" />
-            </div>
-
-            <h4 className="text-gray-400 uppercase tracking-widest text-xs font-bold mb-4 flex items-center gap-2"><Swords size={14}/> Moderators HQ</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <TeamMember name="@NEX_FUCKER" role="Head Mod" letter="N" link="https://t.me/NEX_FUCKER" isMod={true} />
-            </div>
+        {/* 🚀 UPCOMING ARSENAL */}
+        <motion.section className="mb-20" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <div className="text-center mb-10 flex flex-col items-center">
+             <h2 className="text-3xl font-black text-white uppercase tracking-widest flex items-center gap-3">
+               <Flame className="text-red-500" /> Classified Pipeline
+             </h2>
+             <p className="text-red-600 font-bold tracking-[0.4em] uppercase mt-2 text-xs">Under Development</p>
           </div>
 
-          {/* Upcoming - Glassmorphic Banner */}
-          <motion.div 
-            variants={fadeInUp} 
-            className="bg-gradient-to-br from-[#0a0514] to-black p-10 md:p-12 rounded-[3rem] border border-purple-500/20 relative overflow-hidden flex flex-col justify-center group"
-          >
-            <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity duration-700 group-hover:scale-110"><Rocket size={250} /></div>
-            
-            <span className="bg-white/5 text-white w-fit px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8 border border-white/10 backdrop-blur-md">Lab Pipeline</span>
-            
-            <h3 className="text-4xl font-black text-white mb-6">Upcoming Deployments</h3>
-            <ul className="text-gray-400 text-lg mb-8 space-y-4">
-              <li className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_10px_#ec4899]"></span> Project Anime (Web & API)</li>
-              <li className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6]"></span> SMM Panel Infrastructure</li>
-            </ul>
-            
-            <button className="bg-purple-600/10 text-purple-400 font-bold px-6 py-3 rounded-xl w-fit border border-purple-500/20 cursor-not-allowed">Status: Compiling...</button>
-          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            <UpcomingCard name="Auto-Ban Bot" icon={Bot} />
+            <UpcomingCard name="Proofs Web Portal" icon={FileTerminal} />
+          </div>
         </motion.section>
 
-        {/* 📞 FOOTER & COMMUNITY */}
-        <footer id="community" className="border-t border-white/5 bg-[#010101] pt-24 pb-12 px-6 relative z-20">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-            <div className="md:col-span-2">
-              <h2 className="text-5xl font-black text-white tracking-tighter mb-6">NEX<span className="text-purple-600">.</span></h2>
-              <p className="text-gray-500 mb-8 max-w-md text-lg">We don't just write code; we engineer ecosystems. Powering the next generation of Telegram communities.</p>
-              <div className="flex gap-4">
-                <motion.a whileHover={{ y: -5 }} href="https://github.com/HellfireDevs/HellfireDevs" target="_blank" rel="noreferrer" className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-gray-400"><FaGithub size={24}/></motion.a>
-                <motion.a whileHover={{ y: -5 }} href="https://www.instagram.com/kaito.0_3" target="_blank" rel="noreferrer" className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-gray-400"><FaInstagram size={24}/></motion.a>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-bold mb-6 text-lg">Network</h4>
-              <ul className="space-y-4 text-gray-400 font-medium text-sm">
-                <li><a href="https://t.me/+5VJwwq6BKC5iNTll" target="_blank" rel="noreferrer" className="hover:text-purple-400 transition-colors flex items-center gap-2">Main Support Group</a></li>
-                <li><a href="https://t.me/NEX_FUCKR" target="_blank" rel="noreferrer" className="hover:text-purple-400 transition-colors flex items-center gap-2">Management HQ</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold mb-6 text-lg flex items-center gap-2"><Swords size={18} className="text-red-500"/> Fighting GCs</h4>
-              <ul className="space-y-4 text-gray-400 font-medium text-sm">
-                <li><a href="https://t.me/+efBir4F4K2k3M2Jl" target="_blank" rel="noreferrer" className="hover:text-red-400 transition-colors flex items-center gap-2">Community GC 1</a></li>
-                <li><a href="https://t.me/ll_BHAICHARA_ON_TOP_ll" target="_blank" rel="noreferrer" className="hover:text-red-400 transition-colors flex items-center gap-2">Bhaichara On Top</a></li>
-              </ul>
-            </div>
+        {/* 🚬 FOOTER */}
+        <footer className="border-t border-red-900/40 pt-12 pb-8 flex flex-col items-center justify-center">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="text-red-600 w-5 h-5" />
+            <h3 className="text-2xl font-black text-white tracking-widest">NEX<span className="text-red-600">.</span></h3>
           </div>
-          
-          <div className="max-w-7xl mx-auto border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-gray-600 text-sm font-medium">
-            <p>© 2026 Nex Networks. Engineered by HellfireDevs.</p>
-            <a href="https://privacy.yukiapi.site" target="_blank" rel="noreferrer" className="hover:text-purple-400 transition-colors cursor-pointer border-b border-transparent hover:border-purple-400 pb-0.5">Privacy Policy? Haan bhai, yahan click kar le 🌚</a>
+          <div className="text-red-900 font-bold text-[10px] tracking-[0.3em] uppercase text-center">
+            ENFORCEMENT DIVISION • PURGING THE NETWORK<br/>
+            © 2026 NEX BANNING. ALL RIGHTS RESERVED.
           </div>
         </footer>
+
       </div>
     </div>
   );
-}
+          }
