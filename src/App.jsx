@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   ShieldAlert, Ban, AlertTriangle, BookOpen, Crosshair, 
-  Flame, Gavel, Lock, Database, Bot, FileTerminal, ExternalLink 
+  Flame, Gavel, Lock, Database, Bot, FileTerminal, ExternalLink, Zap 
 } from 'lucide-react';
 import { FaTelegramPlane } from 'react-icons/fa';
 import Background from './components/Background'; 
@@ -228,4 +228,4 @@ export default function App() {
       </div>
     </div>
   );
-          }
+}
